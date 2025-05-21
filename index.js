@@ -1,11 +1,11 @@
 const express = require('express');
 const path = require('path');
-const app = express();
-const port = 3000;
 
+const app = express();
 
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views')); 
+app.set('views', './views');
+app.use(express.static('public'));
 
 function gerarFibonacci(n) {
     const fib = [0, 1];
@@ -15,12 +15,11 @@ function gerarFibonacci(n) {
     return fib;
 }
 
-// Rota principal
-app.get('/', (req, res) => {
+app.get('/', (request, response) => {
     const sequencia = gerarFibonacci(20);
-    res.render('home', { sequencia });
+    response.render('home', { sequencia });
 });
 
-app.listen(port, () => {
-    console.log('Servidor rodando em http://localhost:${port}');
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
 });
